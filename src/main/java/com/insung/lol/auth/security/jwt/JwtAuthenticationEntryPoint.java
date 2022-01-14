@@ -1,7 +1,6 @@
 package com.insung.lol.auth.security.jwt;
 
 import java.io.IOException;
-import java.io.Serializable;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,9 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-public class JwtAuthenticationEntryPoint  implements AuthenticationEntryPoint, Serializable {
-
-	private static final long serialVersionUID = 6377514362070202805L;
+public class JwtAuthenticationEntryPoint  implements AuthenticationEntryPoint {
 
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,

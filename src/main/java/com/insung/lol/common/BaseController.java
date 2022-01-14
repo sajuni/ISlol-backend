@@ -1,14 +1,21 @@
 package com.insung.lol.common;
 
+import java.util.HashMap;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.insung.lol.common.constant.ApiConstant;
+import com.insung.lol.common.exception.BizException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -60,4 +67,19 @@ public class BaseController {
 
 		return responsJson;
 	}
+	
+	@ExceptionHandler(Exception.class)
+    public ResponseEntity<String> DefaultException(HttpServletRequest request, HttpServletResponse response, Exception e) {
+		log.error("DefaultException", e);
+        JSONObject json = getResponseJson(ApiConstant.RESULT_CODE_FAIL, e.getMessage(), new HashMap<>());
+        return new ResponseEntity<String>(json.toString(), HttpStatus.OK);
+    }
+	
+	@ExceptionHandler(BizException.class)
+    public ResponseEntity<String> BizExceptionHand(HttpServletRequest request, HttpServletResponse response, BizException e) {
+    	log.error("BizExceptionHand", e);
+        JSONObject json = getResponseJson(e.getCode(), e.getMessage(), new HashMap<>());
+		return new ResponseEntity<String>(json.toString(), HttpStatus.OK);
+	}
+
 }

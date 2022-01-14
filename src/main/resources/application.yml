@@ -26,6 +26,6 @@ logging:
 jwt:
   expired:
     jwtSecret: jwtsecret
-    jwtExpirationMs: 900000
-    rjwtExpirationMs: 1800000
+    jwtExpirationMs: 90000
+    rjwtExpirationMs: 180000
     
